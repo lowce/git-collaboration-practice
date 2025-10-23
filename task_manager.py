@@ -85,11 +85,7 @@ class TaskManager:
             return
         
         print("\n" + "="*60)
-<<<<<<< HEAD
-        print("📋 My awesome task list")
-=======
-        print("📋 Task overview")
->>>>>>> main
+        print("📋 My Task List")
         print("="*60)
         
         for idx, task in enumerate(self.tasks, 1):
