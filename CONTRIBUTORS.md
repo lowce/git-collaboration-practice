@@ -13,3 +13,4 @@ Complete Exercise 1 in the README to add your name below.
 <!-- Add your name below this line in alphabetical order -->
 <!-- Format: - **Your Name** - Your Role/Contribution -->
 
+- **Low Ce** - Training
