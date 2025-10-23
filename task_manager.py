@@ -139,7 +139,7 @@ class TaskManager:
         """Count how many tasks are completed."""
         # BUG: This counts incorrectly! 
         # Exercise 3: Can you find and fix this bug?
-        return sum(1 for task in self.tasks if not task.completed)
+        return sum(1 for task in self.tasks if task.completed)
     
     def save_tasks(self):
         """Save tasks to JSON file."""
