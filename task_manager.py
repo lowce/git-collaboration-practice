@@ -85,7 +85,7 @@ class TaskManager:
             return
         
         print("\n" + "="*60)
-        print("📋 YOUR TASKS")
+        print("📋 Task overview")
         print("="*60)
         
         for idx, task in enumerate(self.tasks, 1):
