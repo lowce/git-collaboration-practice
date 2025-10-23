@@ -23,11 +23,12 @@ from datetime import datetime
 class Task:
     """Represents a single task with title, description, and completion status."""
     
-    def __init__(self, title, description="", completed=False, created_at=None):
+    def __init__(self, title, description="", completed=False, created_at=None, priority="medium"):
         self.title = title
         self.description = description
         self.completed = completed
         self.created_at = created_at or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.priority = priority
     
     def mark_complete(self):
         """Mark this task as completed."""
@@ -39,7 +40,8 @@ class Task:
             "title": self.title,
             "description": self.description,
             "completed": self.completed,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "priority": self.priority
         }
     
     @staticmethod
@@ -49,14 +51,16 @@ class Task:
             title=data["title"],
             description=data.get("description", ""),
             completed=data.get("completed", False),
-            created_at=data.get("created_at")
+            created_at=data.get("created_at"),
+            priority=data.get("priority", "medium")
         )
     
     def __str__(self):
         """String representation of the task."""
         status = "✓" if self.completed else "○"
-        return f"[{status}] {self.title}"
-
+        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}
+        emoji = priority_emoji.get(self.priority, "⚪")
+        return f"[{status}] {emoji} {self.title}"
 
 class TaskManager:
     """Manages a collection of tasks with persistence."""
@@ -66,16 +70,16 @@ class TaskManager:
         self.tasks = []
         self.load_tasks()
     
-    def add_task(self, title, description=""):
+    def add_task(self, title, description="", priority="medium"):
         """Add a new task to the list."""
         if not title.strip():
             print("❌ Error: Task title cannot be empty!")
             return False
         
-        task = Task(title.strip(), description.strip())
+        task = Task(title.strip(), description.strip(), priority=priority)
         self.tasks.append(task)
         self.save_tasks()
-        print(f"✅ Task added: {title}")
+        print(f"✅ Task added: {title} (Priority: {priority})")
         return True
     
     def view_tasks(self):
@@ -197,7 +201,11 @@ def main():
             print("-" * 60)
             title = input("Task title: ").strip()
             description = input("Description (optional): ").strip()
-            manager.add_task(title, description)
+            print("Priority options: high, medium, low")
+            priority = input("Priority (default: medium): ").strip().lower()
+            if priority not in ["high", "medium", "low"]:
+                priority = "medium"
+            manager.add_task(title, description, priority)
         
         elif choice == "3":
             manager.view_tasks()
